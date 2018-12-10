@@ -4,10 +4,13 @@ $file = file_get_contents('../input.txt');
 if($file !== ''){
     try{
         $arr = explode("\r", $file);
-        $a = array_map('trim', explode(',', $arr[0]));
-        $b = array_map('trim', explode(',', $arr[1]));
-
-        $result = array_intersect($a, $b);
+        
+        foreach($arr as $row){
+            $a[] = array_map('trim', explode(',', $row));
+        }
+        
+        $result = call_user_func_array('array_intersect',$a);
+        
         print_r($result);
     }catch(Exception $e){
         echo "Error Data";

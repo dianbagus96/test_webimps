@@ -7,19 +7,14 @@ try{
         }
         
         const split =  contents.split("\r\n")
-        const arr1 = split[0]
-        const arr2 = split[1]
-        
-        if(!arr1 || !arr2){
-            console.log('Must be 2 arrays in file');        
-            return false
-        }
-        console.log('first array : '+ arr1)
-        console.log('second array : '+ arr2)
-        sArr1 = arr1.split(",").map(s => s.trim())
-        sArr2 = arr2.split(",").map(s => s.trim())
 
-        const hasil = intersect(sArr1, sArr2)
+        var arr = new Array()
+        split.forEach((item, num)=>{
+            arr[num] = item.split(",").map(s => s.trim())
+            
+        })
+
+        const hasil = intersect(arr)
         console.log('matching value : '+hasil)
 
     });
@@ -27,10 +22,29 @@ try{
     console.log('Something Error With Data');
 }
 
-function intersect(a, b) {
-    var t;
-    if (b.length > a.length) t = b, b = a, a = t;
-    return a.filter(function (e) {
-        return b.indexOf(e) > -1;
-    });
-}
+function intersect() {
+    var result = [];
+    var lists;
+  
+    arguments.length === 1 ? lists = arguments[0] : lists = arguments;
+    
+    for(var i = 0; i < lists.length; i++) {
+      var currentList = lists[i];
+      for(var y = 0; y < currentList.length; y++) {
+          var currentValue = currentList[y];
+        if(result.indexOf(currentValue) === -1) {
+          var existsInAll = true;
+          for(var x = 0; x < lists.length; x++) {
+            if(lists[x].indexOf(currentValue) === -1) {
+              existsInAll = false;
+              break;
+            }
+          }
+          if(existsInAll) {
+            result.push(currentValue);
+          }
+        }
+      }
+    }
+    return result;
+  }
